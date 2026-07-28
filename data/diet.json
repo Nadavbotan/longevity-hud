@@ -1,0 +1,18 @@
+[
+  {
+    "id": "diet-demo-1",
+    "date": "2026-01-14",
+    "meal": "Greek yogurt, berries, walnuts",
+    "proteinG": 28,
+    "calories": 360,
+    "addedAt": "2026-01-14T07:30:00.000Z"
+  },
+  {
+    "id": "diet-demo-2",
+    "date": "2026-01-14",
+    "meal": "Grilled salmon, quinoa, greens",
+    "proteinG": 42,
+    "calories": 620,
+    "addedAt": "2026-01-14T13:00:00.000Z"
+  }
+]

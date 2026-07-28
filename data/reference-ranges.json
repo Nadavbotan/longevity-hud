@@ -1,0 +1,230 @@
+[
+  {
+    "key": "apob",
+    "name": "ApoB",
+    "unit": "mg/dL",
+    "direction": "lower",
+    "optimalHigh": 60,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "lpa",
+    "name": "Lp(a)",
+    "unit": "nmol/L",
+    "direction": "lower",
+    "optimalHigh": 75,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "ldl",
+    "name": "LDL-C",
+    "unit": "mg/dL",
+    "direction": "lower",
+    "optimalHigh": 70,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "hdl",
+    "name": "HDL-C",
+    "unit": "mg/dL",
+    "direction": "higher",
+    "optimalLow": 50,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "triglycerides",
+    "name": "Triglycerides",
+    "unit": "mg/dL",
+    "direction": "lower",
+    "optimalHigh": 100,
+    "horsemen": ["cardiovascular", "metabolic"]
+  },
+  {
+    "key": "fasting_glucose",
+    "name": "Fasting Glucose",
+    "unit": "mg/dL",
+    "direction": "band",
+    "optimalLow": 70,
+    "optimalHigh": 90,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "fasting_insulin",
+    "name": "Fasting Insulin",
+    "unit": "uIU/mL",
+    "direction": "lower",
+    "optimalHigh": 6,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "hba1c",
+    "name": "HbA1c",
+    "unit": "%",
+    "direction": "lower",
+    "optimalHigh": 5.4,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "hscrp",
+    "name": "hs-CRP",
+    "unit": "mg/L",
+    "direction": "lower",
+    "optimalHigh": 1.0,
+    "horsemen": ["cardiovascular", "cancer"]
+  },
+  {
+    "key": "homocysteine",
+    "name": "Homocysteine",
+    "unit": "umol/L",
+    "direction": "lower",
+    "optimalHigh": 9,
+    "horsemen": ["cardiovascular", "neurodegenerative"]
+  },
+  {
+    "key": "vitamin_d",
+    "name": "Vitamin D",
+    "unit": "ng/mL",
+    "direction": "band",
+    "optimalLow": 40,
+    "optimalHigh": 60,
+    "horsemen": ["neurodegenerative", "cancer"]
+  },
+  {
+    "key": "alt",
+    "name": "ALT",
+    "unit": "U/L",
+    "direction": "lower",
+    "optimalHigh": 25,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "uric_acid",
+    "name": "Uric Acid",
+    "unit": "mg/dL",
+    "direction": "lower",
+    "optimalHigh": 5.5,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "omega3_index",
+    "name": "Omega-3 Index",
+    "unit": "%",
+    "direction": "higher",
+    "optimalLow": 8,
+    "horsemen": ["cardiovascular", "neurodegenerative"]
+  },
+  {
+    "key": "bmi",
+    "name": "BMI",
+    "unit": "kg/m²",
+    "direction": "band",
+    "optimalLow": 18.5,
+    "optimalHigh": 25,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "body_fat_pct",
+    "name": "Body Fat",
+    "unit": "%",
+    "direction": "lower",
+    "optimalHigh": 18,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "visceral_fat",
+    "name": "Visceral Fat",
+    "unit": "g",
+    "direction": "lower",
+    "optimalHigh": 100,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "grip_strength",
+    "name": "Grip Strength (R)",
+    "unit": "kg",
+    "direction": "higher",
+    "optimalLow": 40,
+    "horsemen": ["neurodegenerative"]
+  },
+  {
+    "key": "systolic_bp",
+    "name": "Systolic BP",
+    "unit": "mmHg",
+    "direction": "lower",
+    "optimalHigh": 120,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "diastolic_bp",
+    "name": "Diastolic BP",
+    "unit": "mmHg",
+    "direction": "lower",
+    "optimalHigh": 80,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "sleep_ahi",
+    "name": "Sleep AHI",
+    "unit": "events/hr",
+    "direction": "lower",
+    "optimalHigh": 5,
+    "horsemen": ["neurodegenerative"]
+  },
+  {
+    "key": "liver_att",
+    "name": "Liver Attenuation",
+    "unit": "dB/cm/MHz",
+    "direction": "lower",
+    "optimalHigh": 0.66,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "liver_sound_speed",
+    "name": "Liver Sound Speed",
+    "unit": "m/s",
+    "direction": "higher",
+    "optimalLow": 1537,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "liver_viscosity",
+    "name": "Liver Viscosity",
+    "unit": "Pa·s",
+    "direction": "lower",
+    "optimalHigh": 1.8,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "liver_stiffness",
+    "name": "Liver Stiffness",
+    "unit": "kPa",
+    "direction": "lower",
+    "optimalHigh": 7.1,
+    "horsemen": ["metabolic"]
+  },
+  {
+    "key": "ecg_hr",
+    "name": "ECG Heart Rate",
+    "unit": "bpm",
+    "direction": "band",
+    "optimalLow": 50,
+    "optimalHigh": 100,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "ecg_rmssd",
+    "name": "ECG RMSSD",
+    "unit": "ms",
+    "direction": "higher",
+    "optimalLow": 20,
+    "horsemen": ["cardiovascular"]
+  },
+  {
+    "key": "bone_spine_t_score",
+    "name": "Spine T-score",
+    "unit": "SD",
+    "direction": "higher",
+    "optimalLow": -1,
+    "horsemen": ["neurodegenerative"]
+  }
+]

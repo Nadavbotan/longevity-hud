@@ -1,0 +1,80 @@
+{
+  "id": "panel-2026-01-15",
+  "date": "2026-01-15",
+  "source": "Demo Lab Panel (synthetic, not real patient data)",
+  "markers": [
+    {
+      "key": "apob",
+      "name": "ApoB",
+      "value": 72,
+      "unit": "mg/dL",
+      "date": "2026-01-15",
+      "optimalHigh": 60,
+      "status": "out"
+    },
+    {
+      "key": "ldl",
+      "name": "LDL-C",
+      "value": 85,
+      "unit": "mg/dL",
+      "date": "2026-01-15",
+      "optimalHigh": 70,
+      "status": "out"
+    },
+    {
+      "key": "hdl",
+      "name": "HDL-C",
+      "value": 58,
+      "unit": "mg/dL",
+      "date": "2026-01-15",
+      "optimalLow": 50,
+      "status": "optimal"
+    },
+    {
+      "key": "triglycerides",
+      "name": "Triglycerides",
+      "value": 92,
+      "unit": "mg/dL",
+      "date": "2026-01-15",
+      "optimalHigh": 100,
+      "status": "optimal"
+    },
+    {
+      "key": "fasting_glucose",
+      "name": "Fasting Glucose",
+      "value": 88,
+      "unit": "mg/dL",
+      "date": "2026-01-15",
+      "optimalLow": 70,
+      "optimalHigh": 90,
+      "status": "optimal"
+    },
+    {
+      "key": "fasting_insulin",
+      "name": "Fasting Insulin",
+      "value": 5.2,
+      "unit": "uIU/mL",
+      "date": "2026-01-15",
+      "optimalHigh": 6,
+      "status": "optimal"
+    },
+    {
+      "key": "hba1c",
+      "name": "HbA1c",
+      "value": 5.3,
+      "unit": "%",
+      "date": "2026-01-15",
+      "optimalHigh": 5.4,
+      "status": "optimal"
+    },
+    {
+      "key": "hscrp",
+      "name": "hs-CRP",
+      "value": 0.8,
+      "unit": "mg/L",
+      "date": "2026-01-15",
+      "optimalHigh": 1,
+      "status": "optimal"
+    }
+  ]
+}

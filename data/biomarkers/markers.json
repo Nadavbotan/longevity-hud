@@ -1,0 +1,90 @@
+[
+  {
+    "key": "apob",
+    "name": "ApoB",
+    "unit": "mg/dL",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 72
+      }
+    ]
+  },
+  {
+    "key": "fasting_glucose",
+    "name": "Fasting Glucose",
+    "unit": "mg/dL",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 88
+      }
+    ]
+  },
+  {
+    "key": "fasting_insulin",
+    "name": "Fasting Insulin",
+    "unit": "uIU/mL",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 5.2
+      }
+    ]
+  },
+  {
+    "key": "hba1c",
+    "name": "HbA1c",
+    "unit": "%",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 5.3
+      }
+    ]
+  },
+  {
+    "key": "hdl",
+    "name": "HDL-C",
+    "unit": "mg/dL",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 58
+      }
+    ]
+  },
+  {
+    "key": "hscrp",
+    "name": "hs-CRP",
+    "unit": "mg/L",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 0.8
+      }
+    ]
+  },
+  {
+    "key": "ldl",
+    "name": "LDL-C",
+    "unit": "mg/dL",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 85
+      }
+    ]
+  },
+  {
+    "key": "triglycerides",
+    "name": "Triglycerides",
+    "unit": "mg/dL",
+    "history": [
+      {
+        "date": "2026-01-15",
+        "value": 92
+      }
+    ]
+  }
+]

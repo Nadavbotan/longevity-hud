@@ -1,0 +1,29 @@
+[
+  {
+    "id": "decathlon-stairs",
+    "description": "Carry a 15kg grandchild up two flights of stairs at 80",
+    "requiredCapacity": "Goblet squat 24kg x10, climb without breathlessness",
+    "currentCapacity": "Goblet squat 20kg x8",
+    "progress": 65,
+    "status": "on-track",
+    "addedAt": "2026-01-01T09:00:00.000Z"
+  },
+  {
+    "id": "decathlon-suitcase",
+    "description": "Lift a 20kg suitcase into an overhead bin at 75",
+    "requiredCapacity": "Overhead press 20kg x5 each arm",
+    "currentCapacity": "Overhead press 16kg x5",
+    "progress": 50,
+    "status": "behind",
+    "addedAt": "2026-01-01T09:00:00.000Z"
+  },
+  {
+    "id": "decathlon-hike",
+    "description": "Hike 10km on varied terrain at 70",
+    "requiredCapacity": "VO2 max above 40, Zone 2 base 180 min/week",
+    "currentCapacity": "VO2 max 42, Zone 2 around 150 min/week",
+    "progress": 75,
+    "status": "on-track",
+    "addedAt": "2026-01-01T09:00:00.000Z"
+  }
+]

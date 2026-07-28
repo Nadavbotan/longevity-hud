@@ -1,0 +1,53 @@
+name: Sync Garmin
+
+on:
+  schedule:
+    # 05:10 UTC daily - well after midnight in any timezone, so "yesterday" is complete.
+    - cron: '10 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      # GARMIN_TOKEN secret = base64 of ~/.garminconnect/garmin_tokens.json
+      # Mint locally: python scripts/garmin-login.py && python scripts/garmin-token-export.py
+      - name: Restore Garmin token store
+        env:
+          GARMIN_TOKEN: ${{ secrets.GARMIN_TOKEN }}
+        run: |
+          mkdir -p "$HOME/.garminconnect"
+          python - <<'PY'
+          import base64, os
+          from pathlib import Path
+          Path.home().joinpath(".garminconnect", "garmin_tokens.json").write_bytes(
+              base64.b64decode(os.environ["GARMIN_TOKEN"].strip())
+          )
+          PY
+
+      - name: Sync yesterday's Garmin data
+        run: python scripts/sync-garmin.py
+
+      - name: Commit changed data only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/garmin
+          if git diff --cached --quiet; then
+            echo "No Garmin data changes, skipping commit."
+          else
+            git commit -m "Sync Garmin data $(date -u +%Y-%m-%d)"
+            git push
+          fi

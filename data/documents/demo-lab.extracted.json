@@ -1,0 +1,14 @@
+{
+  "source": "Demo Lab Panel (synthetic, not real patient data)",
+  "date": "2026-01-15",
+  "markers": [
+    { "name": "ApoB", "value": 72, "unit": "mg/dL" },
+    { "name": "LDL-C", "value": 85, "unit": "mg/dL" },
+    { "name": "HDL-C", "value": 58, "unit": "mg/dL" },
+    { "name": "Triglycerides", "value": 92, "unit": "mg/dL" },
+    { "name": "Fasting Glucose", "value": 88, "unit": "mg/dL" },
+    { "name": "Fasting Insulin", "value": 5.2, "unit": "uIU/mL" },
+    { "name": "HbA1c", "value": 5.3, "unit": "%" },
+    { "name": "hs-CRP", "value": 0.8, "unit": "mg/L" }
+  ]
+}
