@@ -51,8 +51,8 @@ Full design notes: [PLAN.md](./PLAN.md).
 **Requirements:** Node.js 20+, npm.
 
 ```bash
-git clone https://github.com/Nadavbotan/longevity.git
-cd longevity
+git clone https://github.com/Nadavbotan/longevity-hud.git
+cd longevity-hud
 npm install
 npm run dev
 ```
