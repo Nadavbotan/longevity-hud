@@ -74,8 +74,166 @@ npm run build
 1. **Create a new private GitHub repository** (do not use this public repo for personal health data).
 2. Push this codebase there (or fork and make the fork private).
 3. **Replace demo data** under `data/` with your own, or delete demo files and let Garmin sync / ingest fill them in.
-4. **Deploy to Vercel** and set environment variables (see below).
-5. **Enable Garmin sync** (optional): mint OAuth token locally, store as `GARMIN_TOKEN` repo secret, enable the workflow in `.github/workflows/sync-garmin.yml`.
+4. **Deploy to Vercel** and set environment variables (see [Environment variables](#environment-variables)).
+5. **Set up Garmin daily sync** (optional but recommended): follow [Garmin Connect daily sync](#garmin-connect-daily-sync) end to end.
+
+---
+
+## Garmin Connect daily sync
+
+This is how activity, sleep, HRV, and recovery land in `data/garmin/` **every day without your laptop**. Garmin has no free personal API; the project uses [python-garminconnect](https://github.com/cyberjunky/python-garminconnect) with a **one-time browser/MFA login** on your machine, then a **saved OAuth token** that GitHub Actions reuses.
+
+### What runs automatically
+
+| When | What |
+|------|------|
+| **05:10 UTC daily** | Workflow [`.github/workflows/sync-garmin.yml`](./.github/workflows/sync-garmin.yml) runs on GitHub's servers |
+| Each run | `scripts/sync-garmin.py` pulls **yesterday's** daily summary + activities (complete day in most timezones) |
+| After sync | Action commits changes under `data/garmin/` and pushes to your repo |
+| After push | Vercel rebuilds the site (if connected); HUD / Train tab show new JSON on next deploy |
+
+You can also trigger a run manually: **Actions → Sync Garmin → Run workflow**.
+
+### Before you start
+
+- Use a **private** GitHub repo for your real data (not this public demo repo).
+- **Python 3.11+** on your Mac or PC (3.12 matches the Action).
+- The same **Garmin Connect email/password** as the phone app (MFA may be required once).
+- **GitHub Actions enabled** on the repo (Settings → Actions → General → allow actions).
+
+Garmin passwords never go into GitHub. Only an OAuth token file (base64) is stored as the `GARMIN_TOKEN` secret.
+
+---
+
+### Step 1 - Install Python dependencies (local, one time)
+
+From the repo root:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r scripts/requirements.txt
+```
+
+---
+
+### Step 2 - One-time Garmin login (local)
+
+This opens the normal Garmin OAuth flow and saves tokens to `~/.garminconnect/garmin_tokens.json`.
+
+```bash
+python scripts/garmin-login.py
+```
+
+- Enter your Garmin Connect email and password when prompted.
+- If Garmin asks for a code, use the **email link** or **authenticator app** code (the script explains which).
+- If you get **429 / rate limit**, wait 30-60 minutes and retry.
+- If SSL errors appear, try without VPN.
+
+Success message points you to the token file path. You should not need to log in again for daily sync until the token expires (often **about a year**).
+
+---
+
+### Step 3 - Test sync locally (recommended)
+
+Confirm data lands in JSON before relying on GitHub Actions:
+
+```bash
+python scripts/sync-garmin.py
+```
+
+By default this syncs **yesterday**. For a specific day:
+
+```bash
+python scripts/sync-garmin.py --date 2026-01-15
+```
+
+Check:
+
+- `data/garmin/daily/<date>.json` - resting HR, HRV, sleep, steps, stress, body battery (when Garmin exposes them)
+- `data/garmin/activities/<date>.json` - workouts, Zone 2 minutes, VO2 max when present
+
+Optional offline check (no Garmin account needed):
+
+```bash
+python3 scripts/sync_garmin_check.py
+```
+
+Commit and push these files if you want them in the repo before enabling automation.
+
+---
+
+### Step 4 - Create the `GARMIN_TOKEN` GitHub secret
+
+Export the token file as a **single base64 line** (this is what the Action decodes):
+
+```bash
+python scripts/garmin-token-export.py
+```
+
+Copy the entire output line (no spaces or newlines in the middle).
+
+In GitHub:
+
+1. Open your **private** repo → **Settings** → **Secrets and variables** → **Actions**
+2. **New repository secret**
+3. Name: `GARMIN_TOKEN`
+4. Value: paste the base64 string from the export command
+5. Save
+
+On macOS you can pipe to the clipboard: `python scripts/garmin-token-export.py | pbcopy`
+
+**Do not commit** `~/.garminconnect/` or paste the token into the repo. It is gitignored via `.garminconnect/` in `.gitignore`.
+
+---
+
+### Step 5 - Run the workflow once manually
+
+1. Repo → **Actions** → **Sync Garmin**
+2. **Run workflow** → Run on `main` (or your default branch)
+
+Open the run log. You want:
+
+- "Sync yesterday's Garmin data" completes without auth errors
+- "Commit changed data only" either commits new JSON or prints "No Garmin data changes"
+
+If the job fails on **push**, ensure Actions can write to the repo (the workflow sets `permissions: contents: write`; default `GITHUB_TOKEN` is usually enough for private repos).
+
+---
+
+### Step 6 - Confirm the dashboard updated
+
+1. On GitHub, check the latest commit on `main` (message like `Sync Garmin data YYYY-MM-DD`).
+2. In Vercel, wait for the deploy triggered by that push (or redeploy manually).
+3. Open the site → **Train** tab and home recovery widgets; dates should match synced days.
+
+---
+
+### Local sync only (no GitHub Actions)
+
+If you prefer syncing from your own machine instead of the cloud cron:
+
+```bash
+source .venv/bin/activate
+python scripts/sync-garmin.py
+git add data/garmin && git commit -m "Sync Garmin data" && git push
+```
+
+Use your OS scheduler (cron, launchd, Task Scheduler) to run that daily. The GitHub Action path is recommended so you do not need an always-on computer.
+
+---
+
+### Garmin troubleshooting
+
+| Symptom | What to try |
+|---------|-------------|
+| Login fails in Action but works locally | Token expired or corrupted. Re-run `garmin-login.py`, re-export, update `GARMIN_TOKEN`. |
+| Action auth errors from datacenter IP | Refresh token locally; avoid re-login loops in CI. Re-mint token on a home network. |
+| Empty files / "no data for date" | Watch did not sync that day to Garmin Connect yet, or date is today (use yesterday). |
+| Missing HRV / VO2 on dashboard | Device/model may not expose metric to Connect; see Train tab gaps vs Garmin app. |
+| Token export says file not found | Run `garmin-login.py` first; check `~/.garminconnect/garmin_tokens.json` exists. |
+
+Custom token directory (advanced): set env `GARMINTOKENS` to a folder path for both login and sync scripts.
 
 ---
 
@@ -123,7 +281,7 @@ Copy [`.env.example`](./.env.example) to `.env.local` for local overrides.
 | `GITHUB_REPO` | For writes | `owner/repo` |
 | `GITHUB_BRANCH` | No | Default `main` |
 
-**GitHub Actions (Garmin):** repository secret `GARMIN_TOKEN` = base64 of `~/.garminconnect/garmin_tokens.json` after running `python scripts/garmin-login.py` and `python scripts/garmin-token-export.py` locally.
+**Garmin (GitHub Actions only):** repository secret `GARMIN_TOKEN` - see [Garmin Connect daily sync](#garmin-connect-daily-sync). No Garmin variables are required for the Next.js app itself.
 
 Blood-test parsing is **manual and AI-assisted** (Cursor / Claude Code): drop a file in `data/documents/`, extract markers to `*.extracted.json`, run `npm run ingest-markers -- data/documents/your-file.extracted.json`. No Anthropic API key in CI. See [`.cursor/commands/upload-blood-test.md`](./.cursor/commands/upload-blood-test.md).
 
@@ -169,7 +327,7 @@ The route commits to GitHub via the PAT; Vercel redeploys on push.
 | `check` | Pure-logic self-checks (run in CI or before deploy) |
 | `ingest-markers` | Merge extracted lab JSON into panels + history |
 
-Garmin (Python): `pip install -r scripts/requirements.txt`, then `python scripts/sync-garmin.py`.
+Garmin Python scripts: documented in [Garmin Connect daily sync](#garmin-connect-daily-sync) (`garmin-login.py`, `garmin-token-export.py`, `sync-garmin.py`).
 
 ---
 
