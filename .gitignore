@@ -41,3 +41,8 @@ yarn-error.log*
 # Garmin OAuth token (minted once via garth; never commit)
 .garminconnect/
 garmin-token*.json
+.env.*
+node_modules/
+.next/
+__pycache__/
+*.log
